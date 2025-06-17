@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="https://fakeimg.pl/48x48/00ACC1/1E2A3A/?text=CS&font=poppins&font_weight=bold" /> <!-- New Themed Favicon -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="theme-color" content="#1E2A3A"> <!-- New Dark Theme Base -->
+    <title>Control Shift Pro | UGDCO Damietta</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/recharts/umd/Recharts.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Poppins:wght@300;400;500;600;700&family=Tajawal:wght@300;400;500;700&display=swap');
+        
+        html, body {
+            height: 100%;
+            overflow: hidden; 
+        }
+        body {
+            font-family: 'Poppins', 'Tajawal', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overscroll-behavior-y: contain;
+        }
+        #root {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        ::-webkit-scrollbar {
+            width: 8px; 
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: hsl(from var(--theme-csp-secondary-bg) h s l / 0.3); 
+            border-radius: 10px;
+        }
+        .dark ::-webkit-scrollbar-track {
+            background: hsl(from var(--theme-csp-secondary-dark-bg) h s l / 0.3);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: hsl(from var(--theme-csp-accent) h s l / 0.7);
+            border-radius: 10px;
+            border: 2px solid transparent;
+            background-clip: content-box;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: hsl(from var(--theme-csp-accent-dark) h s l / 0.7);
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: hsl(from var(--theme-csp-accent) h s l / 0.9);
+        }
+        .dark ::-webkit-scrollbar-thumb:hover {
+             background: hsl(from var(--theme-csp-accent-dark) h s l / 0.9);
+        }
+
+    
+        .disclaimer-content h3 {
+            font-size: 1.125rem; /* 18px */
+            font-weight: 700;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            color: var(--theme-csp-primary-text);
+        }
+        .dark .disclaimer-content h3 {
+            color: var(--theme-csp-accent-dark);
+        }
+        .disclaimer-content ul {
+            list-style-type: disc;
+            margin-left: 1.5rem; /* For LTR */
+            margin-bottom: 1rem;
+        }
+        .disclaimer-content[dir="rtl"] ul {
+            margin-left: 0;
+            margin-right: 1.5rem; /* For RTL */
+        }
+        .disclaimer-content li {
+            margin-bottom: 0.25rem;
+        }
+        .button-glow-effect {
+            position: relative;
+            overflow: hidden;
+        }
+        .button-glow-effect::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, hsla(var(--theme-csp-accent-hsl), 0.5) 0%, transparent 70%);
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 0.5s ease-out;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .button-glow-effect:hover::before, .button-glow-effect:focus::before {
+            transform: translate(-50%, -50%) scale(1);
+        }
+         /* Tailwind CSS HSL variable definitions */
+        :root {
+            --theme-csp-primary-hsl: 220 27% 20%; /* #1E2A3A approx */
+            --theme-csp-secondary-bg-hsl: 213 39% 32%; /* #2B3F56 approx */
+            --theme-csp-accent-hsl: 188 100% 38%; /* #00ACC1 approx */
+            --theme-csp-text-on-dark-hsl: 210 17% 88%; /* #E0E0E0 approx */
+
+            --theme-csp-primary-light-hsl: 0 0% 100%; /* #FFFFFF */
+            --theme-csp-secondary-bg-light-hsl: 210 29% 96%; /* #F0F4F8 approx */
+            --theme-csp-accent-light-hsl: 174 100% 29%; /* #00796B approx */
+            --theme-csp-text-on-light-hsl: 200 15% 19%; /* #263238 approx */
+        }
+    </style>
+    <script>
+      tailwind.config = {
+        darkMode: 'class', 
+        theme: {
+          extend: {
+            fontFamily: {
+              'cairo': ['Cairo', 'sans-serif'],
+              'poppins': ['Poppins', 'sans-serif'],
+              'tajawal': ['Tajawal', 'sans-serif'],
+            },
+            colors: {
+              'csp-primary': 'hsl(var(--theme-csp-primary-light-hsl) / <alpha-value>)', 
+              'csp-secondary-bg': 'hsl(var(--theme-csp-secondary-bg-light-hsl) / <alpha-value>)', 
+              'csp-accent': 'hsl(var(--theme-csp-accent-light-hsl) / <alpha-value>)', 
+              'csp-primary-text': 'hsl(var(--theme-csp-text-on-light-hsl) / <alpha-value>)', 
+              'csp-secondary-text': 'hsl(var(--theme-csp-text-on-light-hsl) / 0.7)', 
+
+              'csp-primary-dark': 'hsl(var(--theme-csp-primary-hsl) / <alpha-value>)', 
+              'csp-secondary-dark-bg': 'hsl(var(--theme-csp-secondary-bg-hsl) / <alpha-value>)', 
+              'csp-accent-dark': 'hsl(var(--theme-csp-accent-hsl) / <alpha-value>)', 
+              'csp-primary-dark-text': 'hsl(var(--theme-csp-text-on-dark-hsl) / <alpha-value>)', 
+              'csp-secondary-dark-text': 'hsl(var(--theme-csp-text-on-dark-hsl) / 0.7)', 
+              
+              'csp-info': '#3498DB', 
+              'csp-success': '#2ECC71',
+              'csp-warning': '#F1C40F',
+              'csp-error': '#E74C3C',
+
+              'csp-base-100': 'hsl(var(--theme-csp-primary-light-hsl) / <alpha-value>)',
+              'csp-base-200': 'hsl(var(--theme-csp-secondary-bg-light-hsl) / <alpha-value>)',
+              'csp-base-300': 'hsl(var(--theme-csp-secondary-bg-light-hsl) / 0.8)', 
+              'csp-base-content': 'hsl(var(--theme-csp-text-on-light-hsl) / <alpha-value>)',
+              
+              'csp-base-dark-100': 'hsl(var(--theme-csp-primary-hsl) / <alpha-value>)',
+              'csp-base-dark-200': 'hsl(var(--theme-csp-secondary-bg-hsl) / <alpha-value>)',
+              'csp-base-dark-300': 'hsl(var(--theme-csp-secondary-bg-hsl) / 0.8)', 
+              'csp-base-dark-content': 'hsl(var(--theme-csp-text-on-dark-hsl) / <alpha-value>)',
+            },
+            boxShadow: {
+              'top-lg': '0 -10px 15px -3px rgba(0, 0, 0, 0.1), 0 -4px 6px -2px rgba(0, 0, 0, 0.05)',
+              'interactive': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+              'interactive-lg': '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+            }
+          }
+        }
+      }
+    </script>
+<script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.1.0/",
+    "react": "https://esm.sh/react@^19.1.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.1.0/",
+    "recharts": "https://esm.sh/recharts@^2.15.3",
+    "firebase/": "https://esm.sh/firebase@^11.9.1/",
+    "@google/genai": "https://esm.sh/@google/genai"
+  }
+}
+</script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const processColor = (value) => {
+          if (typeof value !== 'string') return value;
+          const match = value.match(new RegExp('var\\\\((--theme-[a-zA-Z0-9-]+)\\\\)'));
+          if (match && match[1]) {
+            const varName = match[1];
+            const style = getComputedStyle(document.documentElement);
+            return style.getPropertyValue(varName).trim();
+          }
+          return value;
+        };
+
+        const updateTailwindColors = () => {
+          const themeColors = {
+            'csp-primary': processColor('var(--theme-csp-primary-light-hsl)'),
+            'csp-secondary-bg': processColor('var(--theme-csp-secondary-bg-light-hsl)'),
+            'csp-accent': processColor('var(--theme-csp-accent-light-hsl)'),
+            'csp-primary-text': processColor('var(--theme-csp-text-on-light-hsl)'),
+            'csp-secondary-text': `hsl(${processColor('var(--theme-csp-text-on-light-hsl)')} / 0.7)`,
+
+            'csp-primary-dark': processColor('var(--theme-csp-primary-hsl)'),
+            'csp-secondary-dark-bg': processColor('var(--theme-csp-secondary-bg-hsl)'),
+            'csp-accent-dark': processColor('var(--theme-csp-accent-hsl)'),
+            'csp-primary-dark-text': processColor('var(--theme-csp-text-on-dark-hsl)'),
+            'csp-secondary-dark-text': `hsl(${processColor('var(--theme-csp-text-on-dark-hsl)')} / 0.7)`,
+            
+            'csp-base-100': processColor('var(--theme-csp-primary-light-hsl)'),
+            'csp-base-200': processColor('var(--theme-csp-secondary-bg-light-hsl)'),
+            'csp-base-300': `hsl(${processColor('var(--theme-csp-secondary-bg-light-hsl)')} / 0.8)`,
+            'csp-base-content': processColor('var(--theme-csp-text-on-light-hsl)'),
+            
+            'csp-base-dark-100': processColor('var(--theme-csp-primary-hsl)'),
+            'csp-base-dark-200': processColor('var(--theme-csp-secondary-bg-hsl)'),
+            'csp-base-dark-300': `hsl(${processColor('var(--theme-csp-secondary-bg-hsl)')} / 0.8)`,
+            'csp-base-dark-content': processColor('var(--theme-csp-text-on-dark-hsl)'),
+          };
+
+          for (const [key, value] of Object.entries(themeColors)) {
+            if (tailwind.config.theme.extend.colors[key.replace(new RegExp('-', 'g'), '_')]) {
+              console.warn(`Tailwind color key ${key} might conflict with HSL conversion. Review setup.`);
+            }
+          }
+        };
+        
+        const applyInitialTheme = () => {
+          let themeToApply = localStorage.getItem('theme') || 'light';
+          if (themeToApply === 'system') {
+            themeToApply = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          }
+          if (!localStorage.getItem('theme')) {
+              const currentHour = new Date().getHours();
+              if (currentHour >= 18 || currentHour < 6) {
+                  themeToApply = 'dark';
+              } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeToApply = 'dark';
+              }
+          }
+          if (themeToApply === 'dark') {
+            document.documentElement.classList.add('dark');
+            document.documentElement.setAttribute('data-theme', 'dark');
+          } else {
+            document.documentElement.classList.remove('dark');
+            document.documentElement.setAttribute('data-theme', 'light');
+          }
+          updateTailwindColors(); 
+        };
+        applyInitialTheme();
+
+        const observer = new MutationObserver((mutationsList) => {
+          for (const mutation of mutationsList) {
+            if (mutation.type === 'attributes' && (mutation.attributeName === 'class' || mutation.attributeName === 'data-theme')) {
+              updateTailwindColors();
+            }
+          }
+        });
+        observer.observe(document.documentElement, { attributes: true });
+      });
+    </script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body class="bg-csp-secondary-bg dark:bg-csp-primary-dark text-csp-primary-text dark:text-csp-primary-dark-text transition-colors duration-300">
+    <div id="root" class="flex flex-col h-full"></div>
+    <script type="module" src="/index.tsx"></script>
+</body>
+</html>

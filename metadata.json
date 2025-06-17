@@ -1,0 +1,8 @@
+{
+  "requestFramePermissions": [
+    "camera"
+  ],
+  "name": "Control Shift Pro",
+  "description": "",
+  "prompt": ""
+}
